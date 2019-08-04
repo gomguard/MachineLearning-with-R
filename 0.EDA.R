@@ -20,5 +20,3 @@ library(tidyverse)
 # 변수명    | 내용            | 데이터 타입       | 특징                        | 변수 아이디어
 # ind_nuevo | 신규 고객 지표  | float64 -> int64  | 대부분이 0, 소수가 1인 변수 | 정수로 변환할 것 
 # age       | 나이            | object -> int64   |                             | 나이 데이터 정수형 아님. 정제할 것
-
-eda codes
