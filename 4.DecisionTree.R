@@ -91,3 +91,10 @@ credit_pred_10 <- predict(credit_boost_10, test_credit[-17] %>% as.data.frame())
 
 CrossTable(x = test_credit$default, y = credit_pred_10,
            prop.chisq = F, prop.c = F, prop.r = F)
+
+
+# 각 요소별 가중치 부여
+matrix_dimensions <- list(c('no', 'yes'), c('no', 'yes'))
+names(matrix_dimensions) <- c('predicted', 'actual')
+
+error_cost <- matrix(c( 0, 1, 4, 0), nrow = 2, dimnames = matrix_dimensions)
