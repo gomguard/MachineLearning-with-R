@@ -98,3 +98,9 @@ matrix_dimensions <- list(c('no', 'yes'), c('no', 'yes'))
 names(matrix_dimensions) <- c('predicted', 'actual')
 
 error_cost <- matrix(c( 0, 1, 4, 0), nrow = 2, dimnames = matrix_dimensions)
+
+credit_cost <- C5.0(train_credit[-17] %>% as.data.frame(), y = train_credit$default, trials = 10, costs = error_cost)
+credit_cost_pred <- predict(credit_cost, test_credit[-17] %>% as.data.frame())
+
+CrossTable(test_credit$default, credit_cost_pred,
+           prop.r = F,prop.c = F,prop.chisq = F)
