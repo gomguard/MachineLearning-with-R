@@ -16,3 +16,7 @@
 # 
 # and then back to R
 # install.packages("openssl")
+
+
+# execute this
+# $ sudo apt-get install libssl-dev
