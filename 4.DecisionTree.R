@@ -104,3 +104,45 @@ credit_cost_pred <- predict(credit_cost, test_credit[-17] %>% as.data.frame())
 
 CrossTable(test_credit$default, credit_cost_pred,
            prop.r = F,prop.c = F,prop.chisq = F)
+
+
+# 1994 : IREP 알고리즘 - 사전 가지치기와 사후 가지치기 방법 조합
+# 1995 : RIPPER 알고리즘 - IREP 개선 
+# 장점
+# - 크고 잡음있는 데이터에 효율적
+# - 사람이 읽을 수 있는 규칙 생성
+# 단점
+# - 상식이나 전문 지식에 위배되는 것 같은 규칙 생성
+# 이후 IREP++, SLIPPER, TRIPPER ...
+
+# 의사결정나무의 기본 알고리즘
+# 1. 기르기
+# 2. 가지치기
+# 3. 최적화하기
+
+mushrooms <- read.csv('./ml_R_bread/Chapter 05/mushrooms.csv', stringsAsFactors = T)
+mushrooms %>% summary()
+
+table(mushrooms$type)
+
+
+library(RWeka)
+
+# RWEka 설치시 문제
+
+# Make sure you have Java Development Kit installed and correctly registered in R.
+# If in doubt, re-run "R CMD javareconf" as root.
+
+# R CMD javareconf 실행시
+# conftest.c:1:10: fatal error: jni.h: 그런 파일이나 디렉터리가 없습니다
+
+# sudo apt install default-jdk
+# sudo apt-get install libx11-dev
+# sudo apt-get install xorg-dev
+# sudo apt-get install libcurl4-openssl-dev
+# sudo apt update
+# https://superuser.com/questions/1404488/install-r-3-5-2-under-ubuntu-jni-h-no-such-file-or-directory
+
+# 이후 설치 가능
+
+
