@@ -145,4 +145,5 @@ library(RWeka)
 
 # 이후 설치 가능
 
-
+mushroom_1r <- OneR(type ~ ., data = mushrooms)
+mushroom_1r %>% summary()
