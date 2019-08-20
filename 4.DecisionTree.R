@@ -147,3 +147,4 @@ library(RWeka)
 
 mushroom_1r <- OneR(type ~ ., data = mushrooms)
 mushroom_1r %>% summary()
+
