@@ -126,8 +126,6 @@ mushrooms %>% summary()
 table(mushrooms$type)
 
 
-library(RWeka)
-
 # RWEka 설치시 문제
 
 # Make sure you have Java Development Kit installed and correctly registered in R.
@@ -147,4 +145,6 @@ library(RWeka)
 
 mushroom_1r <- OneR(type ~ ., data = mushrooms)
 mushroom_1r %>% summary()
+
+
 
