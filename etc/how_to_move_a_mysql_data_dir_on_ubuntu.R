@@ -46,6 +46,7 @@ if [ ! -d /var/lib/mysql/mysql ] && [ ! -L /var/lib/mysql/mysql ]; then
  exit 1
 fi
 '''''
+sudo mkdir /var/lib/mysql/mysql -p
 
 sudo systemctl start mysql
 sudo systemctl status mysql
