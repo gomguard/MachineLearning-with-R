@@ -1,0 +1,12 @@
+0. root 계정 생성
+https://studyforus.tistory.com/223
+
+0. 관리자 권한으로 탐색기 열기
+gksudo nautilus
+
+1. 우분투 그래픽 드라이버 설치
+https://hiseon.me/linux/ubuntu/install_nvidia_driver/
+
+2. LAMP 설치
+https://webnautes.tistory.com/1185
+
