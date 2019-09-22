@@ -93,4 +93,67 @@ ins_model$residuals %>%
 # 유의 수준 : 0.05
 
 
+insurance$age2 <- insurance$age^2
+insurance$bmi30 <- ifelse(insurance$bmi >= 30, 1, 0)
+ins_model2 <- lm(expenses ~ age + age2 + children + bmi + sex + bmi30 * smoker + region, data = insurance)
+summary(ins_model2)
 
+
+# Regression Trees, CART ( Classification and Regression Tree )
+## 장점 : 
+# 트리의 장점과 수치 데이터 모델링 능력 결합
+# 사용자가 모델 사전에 정의할 필요 없음
+# 모델 해석시 통계 지식 필요 없음
+## 단점 :
+# 훈련 데이터의 양이 많아야함
+# 개별 특징의 영향력을 해석하기가 어려움
+
+# 수치예측을 위한 트리의 분류 전략 : SDR ( Standard Deviation Reduction ) 표준 편차 축소
+tee <- c(1, 1, 1, 2, 2, 3, 4, 5, 5, 6, 6, 7, 7, 7, 7)
+bor1 <- 9
+at1 <- tee[1:bor1]
+at2 <- tee[(bor1 + 1):length(tee)]
+sdt_a <- sd(tee) - ( length(at1) / length(tee) * sd(at1) ) - ( length(at2) / length(tee) * sd(at2) )
+
+bor2 <- 7
+bt1 <- tee[1:bor2]
+bt2 <- tee[(bor2 + 1):length(tee)]
+sdt_b <- sd(tee) - ( length(bt1) / length(tee) * sd(bt1) ) - ( length(bt2) / length(tee) * sd(bt2) )
+
+
+wine <- read.csv('./ml_R_bread/Chapter 06/whitewines.csv')
+wine %>% glimpse()
+
+bor <- 3750
+wine_train <- wine[1:bor, ]
+wine_test  <- wine[bor+1:length(wine), ]
+
+library(rpart)
+m.rpart <- rpart(quality ~., data = wine_train)
+m.rpart %>% 
+  summary()
+
+install.packages('rpart.plot')
+library(rpart.plot)
+rpart.plot(m.rpart, digits = 4, extra = 101)
+
+p.rpart <- predict(m.rpart, wine_test)
+
+cor(p.rpart, wine_test$quality)
+
+MAE <- function(actual, predicted){
+  mean(abs(actual - predicted))
+}
+
+MAE(p.rpart, wine_test$quality)
+
+plot(p.rpart)
+plot(wine_test$quality)
+
+library(RWeka)
+m.m5p <- M5P(quality ~ ., data = wine_train)
+m.m5p %>% 
+  summary()
+
+p.m5p <- predict(m.m5p, wine_test)
+# ? 값이 이상..
