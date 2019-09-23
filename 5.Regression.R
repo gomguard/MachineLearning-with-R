@@ -144,7 +144,7 @@ cor(p.rpart, wine_test$quality)
 MAE <- function(actual, predicted){
   mean(abs(actual - predicted))
 }
-
+# aaa
 MAE(p.rpart, wine_test$quality)
 
 plot(p.rpart)
