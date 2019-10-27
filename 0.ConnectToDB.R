@@ -11,7 +11,6 @@ library(tidyverse)
 library(DBI)
 library(dbplyr)
 
-
 # Mysql
 library(RMySQL)
 con_mysql <- dbConnect(MySQL(),
@@ -19,7 +18,7 @@ con_mysql <- dbConnect(MySQL(),
   password = getOption("database_password"),
   host = getOption("database.address"),
   port = 3306,
-  dbname = "lch_2019",
+  dbname = "kaggle",
   client.flag = CLIENT_MULTI_RESULTS
 )
 
