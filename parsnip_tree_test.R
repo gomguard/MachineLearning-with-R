@@ -20,7 +20,7 @@ mod_rf <-
   fit(mpg ~ . , mtcars) 
 
 # mod_xg <- parsnip::xgb_train(x = iris[-5], y = iris[[5]], max_depth = 5, nrounds = 10)
-mod_xgb <- boost_tree(mode = "regression", mtry = 20) %>% 
+mod_xgb <- boost_tree(mode = "regression", mtry = 20, trees = 50) %>% 
   set_engine('xgboost') %>% 
   update() %>% 
   fit(mpg ~ ., mtcars)
