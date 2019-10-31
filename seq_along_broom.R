@@ -78,3 +78,39 @@ df <- enframe(x)
 #> 1 a     <int [5]>
 #> 2 b     <int [2]>
 #> 3 c     <int [2]>
+library(rsample)
+library(skimr)
+iris %>% 
+  rsample::initial_split(0.6) %>% 
+  training() %>% 
+  skim()
+
+iris %>% 
+  rsample::initial_split(0.6) %>% 
+  testing() %>% 
+  skim()
+
+
+iris_split <- iris %>% 
+  rsample::initial_split(0.6) 
+
+iris_split %>% 
+  training() %>% 
+  skim()
+
+iris_split %>% 
+  testing() %>% 
+  skim()
+
+
+
+# BROOM
+# https://r4ds.had.co.nz/many-models.html
+
+# The broom package provides three general tools for turning models into tidy data frames:
+
+# broom::glance(model) returns a row for each model. Each column gives a model summary: either a measure of model quality, or complexity, or a combination of the two.
+
+# broom::tidy(model) returns a row for each coefficient in the model. Each column gives information about the estimate or its variability.
+
+# broom::augment(model, data) returns a row for each row in data, adding extra values like residuals, and influence statistics.
