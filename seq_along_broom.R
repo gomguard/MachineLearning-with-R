@@ -102,7 +102,12 @@ iris_split %>%
   testing() %>% 
   skim()
 
-
+fun_lst <- list(mean = mean, median = median)
+fun_lst
+list
+mtcars %>% 
+  group_by(cyl) %>% 
+  summarise_each(funs(mean, median), mpg, wt)
 
 # BROOM
 # https://r4ds.had.co.nz/many-models.html
@@ -114,3 +119,24 @@ iris_split %>%
 # broom::tidy(model) returns a row for each coefficient in the model. Each column gives information about the estimate or its variability.
 
 # broom::augment(model, data) returns a row for each row in data, adding extra values like residuals, and influence statistics.
+
+
+df <- tribble(
+  ~x,
+  letters[1:5],
+  1:3,
+  runif(5)
+)
+
+df %>% 
+  mutate(type = map_chr(x, typeof),
+         length = map_int(x, length))
+
+df <- tribble(
+  ~x,
+  list(a = 1, b = 2),
+  list(a = 3, c = 4)
+)
+df %>% 
+  mutate(a = map_dbl(x, 'a'),
+         b = map_dbl(x, 'b', .null = NA))
