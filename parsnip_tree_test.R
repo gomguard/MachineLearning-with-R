@@ -122,5 +122,22 @@ fit <- aggr_tbl_s_lv1 %>%
   mutate(.pred_rf = map2(data, countrygroup, mod_rf),
          .pred_xg = map2(data, countrygroup, mod_xg))
 
+library(rsample)
+library(parsnip)
+split_data <- mtcars %>% initial_split(0.7)
+train <- split_data %>% training()
+test <- split_data %>% testing()
 
+mod_xgb_ori <- xgboost::xgboost(data = train %>% select(-carb) %>% data.matrix(),
+                 label = train$carb,
+                 nrounds = 100,
+                 objective = 'reg:linear')
 
+mod_xgb_par <- boost_tree(mode = "regression", mtry = 10, trees = 100) %>% 
+  set_engine('xgboost') %>% 
+  set_args(verbose = 1) %>%
+  # update() %>% 
+  fit(carb ~ ., train)
+
+predict(mod_xgb_ori, test %>% select(-carb) %>% data.matrix())
+predict(mod_xgb_par, test %>% select(-carb)) %>% pull()
