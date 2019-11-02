@@ -95,7 +95,7 @@ rec <- aggr_tbl_s$data[[1]] %>%
 
 # data split
 split_data <- function(.x, .type){
-  tryCatch({
+  tryCatch(expr = {
     result <- .x %>% 
     {if(.type == 'test') dplyr::filter(., productnm == target_model) else dplyr::filter(., productnm != target_model)} %>% 
       bake(rec, .)  
