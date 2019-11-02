@@ -133,11 +133,15 @@ mod_xgb_ori <- xgboost::xgboost(data = train %>% select(-carb) %>% data.matrix()
                  nrounds = 100,
                  objective = 'reg:linear')
 
-mod_xgb_par <- boost_tree(mode = "regression", mtry = 10, trees = 100) %>% 
+(mod_xgb_par <- boost_tree(mode = "regression", mtry = 10, trees = 100) %>% 
   set_engine('xgboost') %>% 
   set_args(verbose = 1) %>%
+  # set_args(params = list(eta = 0.6)) %>% 
+    set_args(print_every_n = 10) %>% 
   # update() %>% 
   fit(carb ~ ., train)
+)
+
 
 predict(mod_xgb_ori, test %>% select(-carb) %>% data.matrix())
 predict(mod_xgb_par, test %>% select(-carb)) %>% pull()
