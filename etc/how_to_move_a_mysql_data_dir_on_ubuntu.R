@@ -59,4 +59,7 @@ select @@datadir;
 
 sudo systemctl restart mysql
 
+# 권한문제 발생시 체크해볼것
+# https://sinbot.tistory.com/5
+
 
