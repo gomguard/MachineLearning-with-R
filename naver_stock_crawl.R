@@ -27,7 +27,7 @@ base_url <- 'https://finance.naver.com'
 
 #### theme ####
 target_list <- read_html(x = paste0(base_url, '/sise/theme.nhn'), encoding = 'cp949') %>% 
-  html_nodes('.type_1') %>%
+  html_nodes('.col_type1') %>%
   html_nodes('a')
 
 
@@ -92,3 +92,135 @@ result %>% count(class)
 
 
 result %>% View()
+
+
+
+##############################################
+#### fund finder list ####
+# rvest
+
+url <- 'https://finance.naver.com//fund/fundFinderList.nhn?search=&sortOrder=&pageSize=10000'
+base_html <- read_html(x = url, encoding = 'cp949')
+
+target_list <- base_html%>% 
+  html_nodes('.tbl_fund_info') %>% 
+  html_nodes('a')
+
+target_name <- base_html %>% 
+  html_nodes('.tbl_fund_info') %>% 
+  html_nodes('th') %>% 
+  html_attr('title') %>% 
+  as_tibble() %>% 
+  drop_na()
+
+url_list <- tibble(url = paste0(base_url, target_list %>% html_attr('href')))
+
+url_list <- url_list %>% 
+  dplyr::filter(str_detect(url, 'fundDetail.nhn')) %>% 
+  bind_cols(target_name)
+
+fund_master <- tibble()
+result_stock_prop <- tibble()
+
+
+for(idx in 1:nrow(url_list)){
+print(idx)
+# print(url_list[[idx, 1]])
+detail_html <- url_list[[idx, 1]] %>% 
+  read_html(encoding = 'cp949')
+
+code <- detail_html %>% 
+  html_nodes('.description') %>% 
+  html_nodes('.code') %>% 
+  html_text()
+
+# print(code)
+# print(url_list[[idx, 2]])
+fund_master <- fund_master %>% 
+  bind_rows(c(code = code, fund_name = url_list[[idx, 2]]))
+
+
+stock_name <- detail_html %>% 
+  html_nodes('.stock_area') %>% 
+  html_nodes('.stock') %>% 
+  html_text()
+
+stock_name <- stock_name[stock_name != ""]
+stock_prop <- detail_html %>% 
+  html_nodes('.stock_area') %>% 
+  html_nodes('.rate') %>% 
+  html_text()
+stock_prop <- stock_prop[stock_prop != ""]
+
+# print(stock_name)
+# print(stock_prop)
+result_stock_prop <- result_stock_prop %>% 
+  bind_rows(tibble(code, stock_name, stock_prop))
+
+}
+
+
+write_csv(fund_master, 'fund_master.csv')
+
+wriwrite_csv()
+
+write_csv(result_stock_prop, 'fund_detail.csv')
+
+url <- 'https://finance.naver.com/sise/etf.nhn'
+base_url <- 'https://finance.naver.com'
+
+
+content <- read_html('naver_finance_etf.html')
+
+url_list <- cbind(addr = paste0(base_url, content %>% 
+  html_nodes('.ctg') %>% 
+  html_nodes('a') %>% 
+  html_attr('href'))
+,
+title = content %>% 
+  html_nodes('.ctg') %>% 
+  html_nodes('a') %>% 
+  html_text())
+
+
+result <- tibble()
+
+
+# idx <- 4
+for (idx in 1:nrow(url_list)) {
+
+  print(idx)
+  print(url_list[idx, 1])
+  
+result <- rbind(result,   
+    
+cbind(title = url_list[idx, 2], 
+      code =
+read_html(url_list[idx, 1], encoding='cp949') %>% 
+  html_nodes('.code') %>% 
+  html_text()
+,
+ name =
+read_html(url_list[idx, 1], encoding='cp949') %>% 
+  # html_nodes('.tb_type1_a') %>% 
+  html_nodes('.ctg') %>% 
+  # html_nodes('a') %>% 
+  html_text() %>% 
+  str_replace_all('(\\t|\\n)', '') %>% as.tibble() %>%
+  .[-c(1), ]
+  
+,
+rate =
+read_html(url_list[idx, 1], encoding='cp949') %>% 
+  # html_nodes('.tb_type1_a') %>% 
+  html_nodes('.per') %>% 
+  html_text() %>% str_replace_all('(\\t|\\n)', '') %>% as.tibble() %>% 
+  .[-c(1,2), ] %>% dplyr::filter(value != "")
+)
+)
+  
+  
+}
+
+write_csv(result, 'etf_result.csv')
+
