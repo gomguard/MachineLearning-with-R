@@ -25,6 +25,23 @@ con_mysql <- dbConnect(MySQL(),
 dbGetQuery(con_mysql, "set names utf8")
 table <- tbl(con_mysql, "userdb")
 
+con_mysql <- dbConnect(MariaDB(),
+                       host = '218.209.7.185',
+                       user = 'student',
+                       password = '1QAZxsw@',
+                       port = 3306,
+                       dbname = 'class_01'
+)
+
+dbWriteTable(con_mysql, 'mtcars', mtcars, row.names = F)
+tbl(con_mysql, 'iris') %>% 
+  select(Species) %>% 
+  mutate(a = 1) %>% 
+  mutate(b = 2) %>% 
+  collect()
+
+tbl(con_mysql, 'mtcars')
+
 # Postgresql
 library(RPostgreSQL)
 
