@@ -172,7 +172,7 @@ rcp <- base_dt %>%
   step_dummy(all_nominal(), one_hot = T) %>% 
   step_date(sched_dep_dttm) %>% 
   prep()
-
+ 
 hot <- rcp %>% 
   juice()
 mod <- hot %>% 
