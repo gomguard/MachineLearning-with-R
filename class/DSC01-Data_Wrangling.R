@@ -147,23 +147,23 @@ flights %>%
 ## data preprocess
 # 지연 부분 로직 수정
 
-base_dt <- flights %>% 
-  mutate(
-    dep_dt = make_date(year, month, day),
-    arr_dt = if_else(dep_time > arr_time, dep_dt + days(1), dep_dt)
-  ) %>% 
-  # filter(dep_dt != arr_dt)
-  transmute(
-    carrier, flight, tailnum, origin, dest, air_time, distance,
-    sched_dep_dttm = update(dep_dt, hour = sched_dep_time %/% 100, minute = sched_dep_time %% 100),
-    dep_dttm       = update(dep_dt, hour = dep_time %/% 100, minute = dep_time %% 100),
-    sched_arr_dttm = update(arr_dt, hour = sched_arr_time %/% 100, minute = sched_arr_time %% 100),
-    arr_dttm       = update(arr_dt, hour = arr_time %/% 100, minute = arr_time %% 100),
-    air_time       = difftime(arr_dttm, dep_dttm, units = 'mins'),
-    dep_delay      = difftime(dep_dttm, sched_dep_dttm, units = 'mins'),
-    arr_delay      = difftime(arr_dttm, sched_arr_dttm, units = 'mins'),
-    air_time_delay = arr_delay - dep_delay
-    )
+# base_dt <- flights %>% 
+#   mutate(
+#     dep_dt = make_date(year, month, day),
+#     arr_dt = if_else(dep_time > arr_time, dep_dt + days(1), dep_dt)
+#   ) %>% 
+#   # filter(dep_dt != arr_dt)
+#   transmute(
+#     carrier, flight, tailnum, origin, dest, air_time, distance,
+#     sched_dep_dttm = update(dep_dt, hour = sched_dep_time %/% 100, minute = sched_dep_time %% 100),
+#     dep_dttm       = update(dep_dt, hour = dep_time %/% 100, minute = dep_time %% 100),
+#     sched_arr_dttm = update(arr_dt, hour = sched_arr_time %/% 100, minute = sched_arr_time %% 100),
+#     arr_dttm       = update(arr_dt, hour = arr_time %/% 100, minute = arr_time %% 100),
+#     air_time       = difftime(arr_dttm, dep_dttm, units = 'mins'),
+#     dep_delay      = difftime(dep_dttm, sched_dep_dttm, units = 'mins'),
+#     arr_delay      = difftime(arr_dttm, sched_arr_dttm, units = 'mins'),
+#     air_time_delay = arr_delay - dep_delay
+#     )
 
 library(tidymodels)
 library(broom)
@@ -188,3 +188,24 @@ base_dt %>%
   dplyr::filter(dest %in% c('PSE', 'TUL')) %>% 
   arrange(dest) %>% 
   ggplot(aes(x = dest, y = air_time_delay))
+
+
+# preprocess flights
+base_dt <- flights %>% 
+  mutate(
+    sched_dep_dt = make_date(year, month, day),
+    dep_dt = if_else(sched_dep_time %/% 100 == 23 & dep_time < 100 & dep_delay > 0, sched_dep_dt + days(1), sched_dep_dt),
+    sched_arr_dt = if_else(sched_dep_time > sched_arr_time, sched_dep_dt + days(1), sched_dep_dt),
+    arr_dt = if_else(sched_arr_time %/% 100 == 23 & arr_time < 100 & arr_delay > 0, sched_arr_dt + days(1), sched_arr_dt)
+  ) %>% 
+  transmute(
+    carrier, flight, tailnum, origin, dest, air_time, distance,
+    sched_dep_dttm = update(sched_dep_dt, hour = sched_dep_time %/% 100, minute = sched_dep_time %% 100),
+    dep_dttm       = update(dep_dt, hour = dep_time %/% 100, minute = dep_time %% 100),
+    sched_arr_dttm = update(sched_arr_dt, hour = sched_arr_time %/% 100, minute = sched_arr_time %% 100),
+    arr_dttm       = update(arr_dt, hour = arr_time %/% 100, minute = arr_time %% 100),
+    air_time       = difftime(arr_dttm, dep_dttm, units = 'mins'),
+    dep_delay      = difftime(dep_dttm, sched_dep_dttm, units = 'mins'),
+    arr_delay      = difftime(arr_dttm, sched_arr_dttm, units = 'mins'),
+    air_time_delay = arr_delay - dep_delay
+  )
