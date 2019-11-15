@@ -209,3 +209,24 @@ base_dt <- flights %>%
     arr_delay      = difftime(arr_dttm, sched_arr_dttm, units = 'mins'),
     air_time_delay = arr_delay - dep_delay
   )
+
+
+rcp <- base_dt %>% 
+  recipe(dep_delay ~ carrier + origin + dest + distance + sched_dep_dttm) %>% 
+  step_dummy(all_nominal(), one_hot = T) %>% 
+  step_date(sched_dep_dttm) %>% 
+  prep()
+
+# mod <- rcp %>% 
+#   juice() %>% 
+#   lm(dep_delay ~ ., data = .)
+
+mod <- rcp %>% 
+  juice() %>% 
+  select(-sched_dep_dttm) %>% 
+  mutate(dep_delay = as.numeric(dep_delay)) %>% 
+  lm(dep_delay ~ ., data = .)
+
+mod %>%
+  summary()
+
