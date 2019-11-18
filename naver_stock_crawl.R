@@ -224,3 +224,77 @@ read_html(url_list[idx, 1], encoding='cp949') %>%
 
 write_csv(result, 'etf_result.csv')
 
+
+#### stock_code ####
+
+b_tbl <- read_csv('./stock_code_master.csv')
+b_tbl <- b_tbl %>% 
+  mutate(temp_url = str_c('https://finance.naver.com/item/main.nhn?code=', 종목코드))
+
+result <- b_tbl %>% 
+  mutate(회사명_naver = map(temp_url, comp_name),
+         회사_type = map(temp_url, comp_type))
+
+comp_name <- function(.x){
+  print(.x)
+  base_html <- .x %>% 
+    read_html(encoding = 'cp949') 
+  
+  comp_name <- base_html %>% 
+    html_nodes('.wrap_company') %>% 
+    html_node('a') %>% 
+    html_text()
+  
+  return(comp_name)
+}
+
+comp_type <- function(.x){
+  base_html <- .x %>% 
+    read_html(encoding = 'cp949') 
+  
+  comp_type <- base_html %>% 
+    html_nodes('.description') %>% 
+    html_node('img') %>% 
+    html_attr('alt')  
+  
+  return(comp_type)
+}
+  
+result <- result %>% unnest() %>% 
+  # dplyr::filter(회사명!= 회사명_naver) %>% 
+  select(comp_name = 회사명_naver, stock_type = 회사_type, comp_code = 종목코드,
+         comp_type = 업종, major = 주요제품, init_date = 상장일, owner = 대표자명, location = 지역,
+         url = 홈페이지)
+
+result %>% write_csv('./stock_code_master.csv')
+
+#### etn ####
+base_url <- 'https://finance.naver.com'
+base_url_2 <- 'https://finance.naver.com/sise/etn.nhn'
+
+content <- read_html('naver_etn.html', encoding = 'cp949') 
+
+url_list <- bind_cols(
+  url = content %>% 
+    html_nodes('.ctg') %>% 
+    html_nodes('a') %>% 
+    html_attr('href'),
+  etn_name = content %>% 
+    html_nodes('.ctg') %>% 
+    html_nodes('a') %>% 
+    html_text()
+  ) %>% 
+  mutate(url = paste0(base_url, url)) %>% 
+  mutate(url = str_replace_all(url, '(https:\\/\\/finance.naver.com\\/item\\/main\\.nhn\\?code=)', ''))
+
+url_list %>% 
+  select(code = url, etn_name) %>% 
+  write_csv('naver_etn_code_master.csv')
+
+
+
+read_csv('./stock_code_master.csv') %>% 
+  View()
+read_csv('./etn_code_master.csv') %>% 
+  View()
+
