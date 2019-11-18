@@ -190,6 +190,8 @@ base_dt %>%
   ggplot(aes(x = dest, y = air_time_delay))
 
 
+flights
+
 # preprocess flights
 base_dt <- flights %>% 
   mutate(
@@ -210,6 +212,14 @@ base_dt <- flights %>%
     air_time_delay = arr_delay - dep_delay
   )
 
+base_dt %>% 
+  group_by(carrier, origin, dest) %>% 
+  summarise(ss = mean(air_time_delay, na.rm = T)) %>% 
+  View()
+
+base_dt %>% 
+  filter(origin == 'JFK',
+         dest == 'ROC')
 
 rcp <- base_dt %>% 
   recipe(dep_delay ~ carrier + origin + dest + distance + sched_dep_dttm) %>% 
