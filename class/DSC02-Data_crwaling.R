@@ -80,6 +80,7 @@ result <- result %>%
   set_names(header)
 
 # 3번 문제. Javascript 로 렌더링 되는 페이지
+# 'https://finance.naver.com/sise/etf.nhn'
 'https://finance.naver.com/sise/etf.nhn' %>% 
   read_html(encoding = 'cp949') %>% 
   html_nodes(xpath = '//*[@id="etfItemTable"]/tr[3]/td[1]')
