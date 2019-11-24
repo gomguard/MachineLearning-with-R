@@ -212,8 +212,11 @@ url_proxy <- 'http://naver.com'
 
 pjs$stop()
 pjs <- wdman::phantomjs()
+
 remdr <- remoteDriver(port = 4567L, browserName = 'phantomjs')
 
+# pjs <- wdman::iedriver()
+# remdr <- remoteDriver(port = 4567L, browserName = 'phantomjs')
 # Sys.setenv(http_proxy="http://89.187.181.123:3128")
 Sys.setenv(http_proxy="")
 
@@ -225,3 +228,16 @@ remdr$screenshot(display = T)
 webElem <- remdr$findElement(using = "xpath", "//*[@id='url']")
 webElem$sendKeysToElement(list("www.sprint.com"))
 webElem$screenshot(display = T)
+
+
+url <- 'http://tz.megals.co.kr/megastudy.asp'
+remdr$navigate(url)
+remdr$screenshot(display = T)
+user_id_input <- remdr$findElement(using = 'id', 'USERID')
+user_id_input$sendKeysToElement(list('kalitsma'))
+pwd_input <- remdr$findElement(using = 'id', 'USER_PWD')
+pwd_input$sendKeysToElement(list('pass0912'))
+
+login_btn <- remdr$findElement(using = 'xpath', '/html/body/table/tbody/tr/td/table/tbody/tr[2]/td/div/table/tbody/tr[3]/td[1]/div/img')
+login_btn$click()
+remdr$screenshot(display = T)
