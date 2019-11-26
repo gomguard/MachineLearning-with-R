@@ -90,3 +90,59 @@ print(Sys.time() - st)
 }
 # 100 - 21sec / 53.9sec
 
+
+library(foreach)
+library(doParallel)
+base_url <- 'http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/reverseGeocode?f=pjson&langCode=EN&location=%f,%f'
+
+numcores <- detectCores()
+base_tbl <- res %>% 
+  mutate(grp = row_number() %% numcores + 1) %>% 
+  mutate(api_url = sprintf(base_url, lon, lat))
+base_tbl <- base_tbl[1:100,]
+
+
+mycluster <- makeCluster(numcores)
+registerDoParallel(mycluster)
+
+record <- tibble()
+clusterExport(mycluster, 'record')
+
+{
+  st <- Sys.time()
+  print(st)
+  result_pr <- foreach(.combine = bind_rows, .packages = c('tidyverse', 'httr'), i = 1:11) %dopar% {
+    get_addr <- function(.base_url) {
+      # print(.base_url)
+      # print('-------')
+      address <- '-'
+      tryCatch({
+        address <- .base_url %>% 
+          # sprintf(x, y) %>% 
+          GET() %>% 
+          .$content %>% 
+          rawToChar() %>% 
+          jsonlite::fromJSON()  %>% 
+          .$address %>% 
+          .$LongLabel
+        
+        # print(address)
+        
+      })
+      return(address)
+      
+    }
+    
+    start_num = 1
+    end_num = 10000
+    
+    b_tbl_split <- base_tbl %>% 
+      .[start_num:end_num, ] %>% 
+      dplyr::filter(grp == i) 
+    
+    result <- b_tbl_split %>% 
+      mutate(addr = map_chr(api_url, get_addr))
+    return(result)
+  }
+  print(Sys.time() - st)
+}
