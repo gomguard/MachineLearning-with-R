@@ -51,8 +51,10 @@ registerDoParallel(mycluster)
 
 record <- tibble()
 clusterExport(mycluster, 'record')
+
 {
 st <- Sys.time()
+  print(st)
 result_pr <- foreach(.combine = bind_rows, .packages = c('tidyverse', 'httr'), i = 1:11) %dopar% {
   get_addr <- function(.base_url) {
     # print(.base_url)
@@ -73,14 +75,18 @@ result_pr <- foreach(.combine = bind_rows, .packages = c('tidyverse', 'httr'), i
     return(address)
   }
     
+  start_num = 1
+  end_num = 10000
+  
   b_tbl_split <- base_tbl %>% 
-    dplyr::filter(grp == i) %>% 
-    dplyr::filter(row_number() < 10)
+    .[start_num:end_num, ] %>% 
+    dplyr::filter(grp == i) 
 
   result <- b_tbl_split %>% 
     mutate(addr = map_chr(api_url, get_addr))
-  result
+  return(result)
 }
 print(Sys.time() - st)
 }
+# 100 - 21sec / 53.9sec
 
