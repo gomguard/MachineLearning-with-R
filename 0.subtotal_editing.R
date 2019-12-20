@@ -64,13 +64,13 @@ res %>%
   arrange(Class) %>% 
   map_df(~str_replace_na(.x, 'Total')
   )
-# while(flag){
+
   
   
   
-  if (grp_len == 0) {
-    flag = FALSE
-  }
-# }
+if (grp_len == 0) {
+  flag = FALSE
+}
+
   
 
