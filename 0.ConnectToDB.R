@@ -58,3 +58,8 @@ tbl(con_post, in_schema("kaggle", "iris"))
 
 # to adjust Schema
 dbWriteTable(con_post, c("kaggle", "iris"), iris)
+
+
+# https://yujuwon.tistory.com/entry/MYSQL-LOAD-DATA-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0
+# local-infile
+# 외부 파일 올리기 안될 
