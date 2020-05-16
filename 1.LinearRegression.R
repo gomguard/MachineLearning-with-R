@@ -177,3 +177,7 @@ F 분포, T 검정 다시 명확히
 # https://chukycheese.github.io/statistics/aic/
 # 다중공선성 & VIF
 # https://datascienceschool.net/view-notebook/36176e580d124612a376cf29872cd2f0/
+
+# what is linearity
+# https://sdolnote.tistory.com/entry/Linearity
+# https://sdolnote.tistory.com/entry/LinearityNonlinearityFunction?category=599855
