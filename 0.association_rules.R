@@ -148,7 +148,7 @@ f_log_flt %>%
 #### memory error ####
 
 # http://blog.daum.net/sys4ppl/6
-
+# https://brunch.co.kr/@beusable/190 - 고객이 같이사는 제품의 이유! 연관성 분석 이해하기
 library(arules)
 library(arulesViz)
 
@@ -164,8 +164,18 @@ summary(f_log_tran)
 image(f_log_tran)
 
 f_log_rules <- apriori(f_log_tran)
-inspect(f_log_rules)
-plot(f_log_rules, method = "graph")
+
+rules <- inspect(f_log_rules)
+
+# search item
+f_log_rules %>% 
+  subset(items %in% c('ZCGMK030')) %>% 
+  inspect() %>% 
+  data.frame() %>% 
+  as_tibble() %>% 
+  arrange(desc(lift))
+
+ plot(f_log_rules, method = "graph")
 
 
 ivt_mst %>% 
