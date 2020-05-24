@@ -71,7 +71,8 @@ con_post <- DBI::dbConnect(odbc::odbc(),
                            password = "postgres",
                            port = 25432
 )
-tbl(con_post, "fi_history")
+tbl(con_post, "fi_history") %>% 
+  collect(n = 10)
 
 
 
@@ -180,3 +181,4 @@ f_log_rules %>%
 
 ivt_mst %>% 
   filter(nerp_pgm_id == 'ZFG001')
+
