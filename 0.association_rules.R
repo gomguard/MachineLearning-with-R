@@ -90,7 +90,7 @@ ivt_mst %>%
   filter(nerp_pgm_id == 'ZFG0080')
 
 
-
+## dbwrite 할 경우 ungroup 필수
 
 
 ## Date X Pgm_ID Headmap
