@@ -3,7 +3,7 @@
 ##  File_name : Linear Regression
 ##  Purpose   : 
 ##  Author    : GomGuard
-##  Creted   : 2019-07-25
+##  Creted    : 2019-07-25
 ## 
 #### Version Info ############################
 ##

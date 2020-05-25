@@ -7,17 +7,76 @@
 #
 ###########################################################################
 
+# how to check if specific package contains functions
+# grep("with$", ls("package:dplyr"), value = TRUE)
 
 데이터 사이언스 관련 정리
 언어
 -	R 기본 & 프로그래밍
+- 기본서
+# R for Data Science - https://r4ds.had.co.nz/
+# R for DS Solution - https://jrnold.github.io/r4ds-exercise-solutions/ 
+# ggplot2: Elegant Graphics for Data Analysis - https://ggplot2-book.org/
+# R Packages - https://r-pkgs.org/
+# Advanced R - https://adv-r.hadley.nz/
+# Statistical Inference via Data Science - https://moderndive.com/index.html
+# Feature Engineering and Selection - https://bookdown.org/max/FES/
+# Text Mining with R - https://www.tidytextmining.com/
+
 -	Tidyverse 등 패키지 설명
   - Tidyr
   - Dplyr
+    - select
+      # https://www.tidyverse.org/blog/2018/06/dplyr-0.7.5/
+    - relocate
+    - rename
+    - rename_with
+      # https://www.tidyverse.org/blog/2020/03/dplyr-1-0-0-select-rename-relocate/
+    - rowwise
+      # https://dplyr.tidyverse.org/dev/articles/rowwise.html
+    - mutate
+    - group_by
+    - group_keys
+    - group_modify (eda용)
+      # https://www.tidyverse.org/blog/2019/06/dplyr-0-8-2/
+    - group_nest
+    - group_split
+    - group_map
+      # https://www.tidyverse.org/blog/2019/02/dplyr-0-8-0/
+      # https://www.tidyverse.org/blog/2018/12/dplyr-0-8-0-release-candidate/
+    - summarise
+    - filter
+    - arrange
+    - row_mutation
+      - rows_update
+      - rows_patch
+      - rows_insert
+      - rows_upsert
+      - rows_delete
+      # https://www.tidyverse.org/blog/2020/05/dplyr-1-0-0-last-minute-additions/#row-mutation
+    - across
+      # https://www.tidyverse.org/blog/2020/04/dplyr-1-0-0-colwise/
+    - join
+    - aggregate functions
+      - sum
+      - n
+      - ...
+    - bind_cols, bind_rows
+  - tidyselect
+    - any_of, all_of
+    - starts_with, ends_with
+    - contains
   - Magrittr
   - Readr
   - Tibble
+    - enframe = as_tibble
+    - .namerepair
+    - glimpse
+      # https://www.tidyverse.org/blog/2019/01/tibble-2.0.1/
   - Ggplot2
+    - geom_bar
+    - geom_histogram = geom_freqpoly
+    - cut_width
   - Stringr
   - Purr
   - Lubridate
@@ -31,6 +90,7 @@
   - Xml2
   - Jsonlite
   - Glue
+    # https://www.tidyverse.org/blog/2020/02/glue-strings-and-tidy-eval/
   - Odbc
   - Dbplyr
   - Styler
@@ -46,7 +106,7 @@
 -	Sql
   - 기본 sql
   - R 과 커넥팅 방법
-    	https://rstudio.com/resources/rstudioconf-2020/bridging-the-gap-between-sql-and-r/
+    # https://rstudio.com/resources/rstudioconf-2020/bridging-the-gap-between-sql-and-r/
 
 - Database
 
@@ -118,6 +178,8 @@
   - https://rpubs.com/vsagar19/missing_value_treatment
   
 Web
+# 웹 개발환경 이해
+# https://www.yamestyle.com/201?category=529583
 -	Encoding
 -	Network base
   - proxy
@@ -149,5 +211,31 @@ Etc
 	상품 추천
 	가격, 수요 예측
 	
+
+# It doesn't work
+# read all csv in the same folder
+# tibble(path = dir(pattern = "\\.csv$")) %>% 
+#   rowwise() %>% 
+#   summarise(read_csv(path))
+
+iris %>% 
+  # dplyr::top_n(n = 10, Petal.Width)
+  top_frac(n = 0.5, Petal.Width)
+
+mtcars %>% 
+  group_by(cyl) %>% 
+  group_split()
+
+mtcars %>% 
+  group_by(cyl, carb) %>% 
+  group_modify(~ head(.x, 1))
+
+# group_by, nest
+mtcars %>% 
+  group_by(cyl) %>% 
+  nest()
+
+mtcars %>% 
+  group_nest(cyl)
 
 
