@@ -7,6 +7,8 @@
 #
 ###########################################################################
 
+# how to check if specific package contains functions
+# grep("with$", ls("package:dplyr"), value = TRUE)
 
 데이터 사이언스 관련 정리
 언어
@@ -17,6 +19,10 @@
 # ggplot2: Elegant Graphics for Data Analysis - https://ggplot2-book.org/
 # R Packages - https://r-pkgs.org/
 # Advanced R - https://adv-r.hadley.nz/
+# Statistical Inference via Data Science - https://moderndive.com/index.html
+# Feature Engineering and Selection - https://bookdown.org/max/FES/
+# Text Mining with R - https://www.tidytextmining.com/
+
 -	Tidyverse 등 패키지 설명
   - Tidyr
   - Dplyr
@@ -50,10 +56,16 @@
       # https://www.tidyverse.org/blog/2020/05/dplyr-1-0-0-last-minute-additions/#row-mutation
     - across
       # https://www.tidyverse.org/blog/2020/04/dplyr-1-0-0-colwise/
-    
+    - join
+    - aggregate functions
+      - sum
+      - n
+      - ...
+    - bind_cols, bind_rows
   - tidyselect
     - any_of, all_of
     - starts_with, ends_with
+    - contains
   - Magrittr
   - Readr
   - Tibble
@@ -62,6 +74,9 @@
     - glimpse
       # https://www.tidyverse.org/blog/2019/01/tibble-2.0.1/
   - Ggplot2
+    - geom_bar
+    - geom_histogram = geom_freqpoly
+    - cut_width
   - Stringr
   - Purr
   - Lubridate
@@ -89,7 +104,7 @@
 -	Sql
   - 기본 sql
   - R 과 커넥팅 방법
-    	https://rstudio.com/resources/rstudioconf-2020/bridging-the-gap-between-sql-and-r/
+    # https://rstudio.com/resources/rstudioconf-2020/bridging-the-gap-between-sql-and-r/
 
 - Database
 
@@ -220,3 +235,5 @@ mtcars %>%
 
 mtcars %>% 
   group_nest(cyl)
+
+
