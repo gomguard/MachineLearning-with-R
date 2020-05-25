@@ -36,6 +36,7 @@
   - Styler
   - Rsample
   - Parsnip
+    - https://rstudio.com/resources/rstudioconf-2019/parsnip-a-tidy-model-interface/
   - Stats
   - base
   - selenium
