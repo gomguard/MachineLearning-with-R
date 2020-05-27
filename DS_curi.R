@@ -159,6 +159,8 @@
 -	범주화
 	- K-means, median, ….
 	- Dbscan
+        - hdbscan
+        # https://teamdable.github.io/techblog/Unsupervised-hdbscan
 	- Hierarchical 
 	
 -	룰베이스
