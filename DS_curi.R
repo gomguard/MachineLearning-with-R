@@ -46,6 +46,7 @@
       # https://www.tidyverse.org/blog/2018/12/dplyr-0-8-0-release-candidate/
     - summarise
     - filter
+      - between
     - arrange
     - row_mutation
       - rows_update
