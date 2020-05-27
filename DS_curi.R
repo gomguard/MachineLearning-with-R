@@ -22,7 +22,6 @@
 # Statistical Inference via Data Science - https://moderndive.com/index.html
 # Feature Engineering and Selection - https://bookdown.org/max/FES/
 # Text Mining with R - https://www.tidytextmining.com/
-# cheatsheet - https://rstudio.com/resources/cheatsheets/
 
 -	Tidyverse 등 패키지 설명
   - Tidyr
@@ -36,7 +35,7 @@
     - rowwise
       # https://dplyr.tidyverse.org/dev/articles/rowwise.html
     - mutate
-    - transmute
+      - case_when
     - group_by
     - group_keys
     - group_modify (eda용)
@@ -62,12 +61,9 @@
     - join
     - aggregate functions
       - sum
-      - n, n_distinct
-      - mean, median
+      - n
       - ...
     - bind_cols, bind_rows
-    - pull
-    - sample_n, sample_frac
   - tidyselect
     - any_of, all_of
     - starts_with, ends_with
@@ -80,16 +76,23 @@
     - glimpse
       # https://www.tidyverse.org/blog/2019/01/tibble-2.0.1/
   - Ggplot2
-    # https://github.com/rstudio/cheatsheets/raw/master/data-visualization-2.1.pdf
     - geom_bar
     - geom_histogram = geom_freqpoly
-    - cut_width
+      - cut_width
+      - cut_number
+      - ..density..
+    - geom_boxplot
+    - geom_count
+    - geom_tile
+    - geom_point
+    - geom_bin2d
+    - geom_hex
+    
   - Stringr
   - Purr
   - Lubridate
   - Skimr
   - Recipes
-    # https://rstudio.com/resources/webinars/creating-and-preprocessing-a-design-matrix-with-recipes/
   - Forcats
   - DBI
   - Httr
@@ -103,7 +106,6 @@
   - Styler
   - Rsample
   - Parsnip
-    # https://rstudio.com/resources/rstudioconf-2019/parsnip-a-tidy-model-interface/
   - Stats
   - base
   - selenium
@@ -205,7 +207,6 @@ Etc
 -	Git
 -	Github (action, …..)
 - regexp
-  # https://github.com/rstudio/cheatsheets/raw/master/regex.pdf
 - 데이터 관련 직군 소개	
 - R 주석 및 코딩 가이드
 - SQL 코딩 가이드
@@ -246,9 +247,5 @@ mtcars %>%
 mtcars %>% 
   group_nest(cyl)
 
-library(tidyverse)
-iris %>% 
-  as_tibble() %>% 
-  mutate(a = cumsum(Sepal.Length),
-         b = dense_rank(Sepal.Length))
-
+ggplot(data = diamonds, mapping = aes(x = price, y = ..density..)) + 
+  geom_freqpoly(mapping = aes(colour = cut), binwidth = 500)
