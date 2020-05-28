@@ -131,7 +131,7 @@
   - 모평균
   - 중앙값, mode
   - T 검정, T 분포
-  - https://www.youtube.com/playlist?list=PLaFfQroTgZnyxGm6hz4lWLaMbslG0KDSG
+  # https://www.youtube.com/playlist?list=PLaFfQroTgZnyxGm6hz4lWLaMbslG0KDSG
   
 분석 알고리즘
 -	supervised
@@ -157,10 +157,14 @@
   - gan
 
 -	범주화
-	- K-means, median, ….
+	- K-means, median, k-prototype
+    # https://journal.r-project.org/archive/2018/RJ-2018-048/RJ-2018-048.pdf
+    # https://www.guru99.com/r-k-means-clustering.html
 	- Dbscan
-        - hdbscan
-        # https://teamdable.github.io/techblog/Unsupervised-hdbscan
+    - hdbscan
+    # https://teamdable.github.io/techblog/Unsupervised-hdbscan
+    # https://cran.r-project.org/web/packages/dbscan/vignettes/hdbscan.html
+    
 	- Hierarchical 
 	
 -	룰베이스
@@ -186,7 +190,7 @@
 
 결측치 제거 방법
   - amelia
-  - https://rpubs.com/vsagar19/missing_value_treatment
+  # https://rpubs.com/vsagar19/missing_value_treatment
   
 Web
 # 웹 개발환경 이해
@@ -221,6 +225,7 @@ Etc
 	EDA
 	상품 추천
 	가격, 수요 예측
+  고객 세그먼테이션
 	
 
 # It doesn't work

@@ -34,8 +34,8 @@ fs <- c(mean, median, sd)
 fs %>% 
   map(~ mtcars %>% map_dbl(.x))
 
-data(gapminder)
 library(gapminder)
+data(gapminder)
 
 by_group <- gapminder %>% 
   mutate(year1950 = year - 1950) %>% 
@@ -49,8 +49,8 @@ lm_model <- function(df){
 add_lm <- by_group %>% 
   mutate(mod = data %>% map(lm_model))
 
-add_lm$mod[[1]] %>% tidy()
 library(broom)
+add_lm$mod[[1]] %>% tidy()
 add_lm$mod[[1]] %>% glance()
 add_lm$mod[[1]] %>% broom::augment()
 
