@@ -95,5 +95,6 @@ compute_bmi <- function(data) {
 }
 
 
+
 iris %>% compute_bmi()
 starwars %>% compute_bmi()
