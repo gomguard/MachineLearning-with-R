@@ -22,6 +22,7 @@
 # Statistical Inference via Data Science - https://moderndive.com/index.html
 # Feature Engineering and Selection - https://bookdown.org/max/FES/
 # Text Mining with R - https://www.tidytextmining.com/
+# TidyEval - https://tidyeval.tidyverse.org/
 
 -	Tidyverse 등 패키지 설명
   - Tidyr

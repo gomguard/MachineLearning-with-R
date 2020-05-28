@@ -75,7 +75,7 @@ ins_model <- lm(expenses ~ age + sex + smoker + children + bmi + region,
 # how to save and load linear model 
 ins_model <- lm(expenses ~ ., data = insurance)
 saveRDS(ins_model, './lm_test.rds')
-aaa <- readRDS('./lm_test.rds')
+ins_model <- readRDS('./lm_test.rds')
 
 # 모델에서 각각의 계수는 다른 값들이 고정됐다고 가정했을 때를 기준으로 계산된다.
 # 그렇기 때문에 독립성이 중요함
@@ -133,7 +133,7 @@ m.rpart <- rpart(quality ~., data = wine_train)
 m.rpart %>% 
   summary()
 
-install.packages('rpart.plot')
+# install.packages('rpart.plot')
 library(rpart.plot)
 rpart.plot(m.rpart, digits = 4, extra = 101)
 
