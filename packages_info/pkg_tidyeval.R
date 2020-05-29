@@ -98,3 +98,99 @@ compute_bmi <- function(data) {
 
 iris %>% compute_bmi()
 starwars %>% compute_bmi()
+
+
+
+iris %>% 
+  as_tibble() %>% 
+  select_all(toupper)
+
+# select_all(.tbl, .funs = list(), ...)
+# 
+# select_if(.tbl, .predicate, .funs = list(), ...)
+# 
+# select_at(.tbl, .vars, .funs = list(), ...)
+
+
+range(c(1:10, TRUE, FALSE), na.rm = T, finite = T)
+
+# quoting and unquoting
+# enquo
+grouped_mean <- function(data, group_var, summary_var) {
+  group_var <- enquo(group_var)
+  summary_var <- enquo(summary_var)
+  
+  data %>%
+    group_by(!!group_var) %>%
+    summarise(mean = mean(!!summary_var))
+}
+
+b <- enquo(a)
+
+# R functions can be categorised in two broad categories: evaluating functions and quoting functions
+
+# regular function
+identity(6)
+#> [1] 6
+
+identity(2 * 3)
+#> [1] 6
+
+a <- 2
+b <- 3
+identity(a * b)
+#> [1] 6
+
+
+
+# On the other hand, a quoting function is not passed the value of an expression, it is passed the expression itself. 
+quote(6)
+#> [1] 6
+
+quote(2 * 3)
+#> 2 * 3
+
+quote(a * b)
+#> a * b
+
+# Other familiar quoting operators are "" and ~. The "" operator quotes a piece of text at parsing time and returns a string.
+~ a * b
+"a * b"
+
+
+
+# Direct vs Indirect
+df <- data.frame(
+  y = 1,
+  var = 2
+)
+
+var <- "y"
+df[[var]]
+#> [1] 1
+
+df$y
+#> [1] 1
+
+df[[var]] # Indirect
+#> [1] 1
+
+df[["y"]] # Direct
+#> [1] 1
+
+df$var    # Direct
+#> [1] 2
+
+df$y      # Direct
+#> [1] 1
+
+
+
+
+bb <- "tidyverse"
+library(bb, character.only = TRUE )
+temp <- "MASS"
+library(temp, character.only = TRUE)
+library(!!quote(tidyverse))
+
+# doesn't work
