@@ -89,3 +89,30 @@ clprofiles(kpres, x)
 
 kpres <- kproto(x, 2, lambda = 25)
 clprofiles(kpres, x)
+
+iris_cl <- iris[, c(1,2,3,4)]
+cls <- kmeans(iris_cl, 3)
+
+iris$cluster <- cls$cluster
+
+iris %>% 
+  as_tibble() %>% 
+  mutate(Species_cvt = case_when(
+    Species == "setosa" ~ 1,
+    Species == "versicolor" ~ 2,
+    TRUE ~ 3
+  ),
+  tf_flag = cluster - Species_cvt) %>% 
+  group_by(tf_flag) %>% 
+  count()
+
+
+iris %>% 
+  ggplot() +
+  geom_point(aes(x = Sepal.Width, y = Sepal.Length, color = as_factor(cluster)))
+
+iris %>% 
+  ggplot() +
+  geom_point(aes(x = Sepal.Width, y = Sepal.Length, color = Species))
+
+

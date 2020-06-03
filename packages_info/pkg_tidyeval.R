@@ -194,3 +194,16 @@ library(temp, character.only = TRUE)
 library(!!quote(tidyverse))
 
 # doesn't work
+
+
+
+grouped_mean <- function(data, group_var, summary_var) {
+  group_var <- enquo(group_var)
+  # summary_var <- enquo(summary_var)
+  print(group_var)  
+  print(!!group_var)
+  # data %>%
+  #   group_by(!!group_var) %>%
+  #   summarise(mean = mean(!!summary_var))
+}
+iris %>% grouped_mean(Species, Sepal.Length)
