@@ -115,4 +115,11 @@ iris %>%
   ggplot() +
   geom_point(aes(x = Sepal.Width, y = Sepal.Length, color = Species))
 
-
+# https://journal.r-project.org/archive/2018/RJ-2018-048/RJ-2018-048.pdf
+Es <- numeric(10)
+for(i in 1:10){
+kpres <- kproto(x, k = i, nstart = 5)
+Es[i] <- kpres$tot.withinss
+}
+plot(1:10, Es, type = "b", ylab = "Objective Function", xlab = "# Clusters",
+main = "Scree Plot") # figure 2
