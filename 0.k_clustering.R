@@ -123,3 +123,21 @@ Es[i] <- kpres$tot.withinss
 }
 plot(1:10, Es, type = "b", ylab = "Objective Function", xlab = "# Clusters",
 main = "Scree Plot") # figure 2
+
+# WSS Plot
+res <- tibble()
+for (model in models) {
+        wit <- model$tot.withinss
+        k <- model$size %>% length()
+        res <- res %>% bind_rows(c(k = k, wit = wit))
+}
+
+res %>%
+  ggplot(aes(x = k, y = wit)) + 
+  geom_line() +
+  ggtitle('K-Prototype WSS Value') +
+  theme_bw() +
+  ylim(NA, NA) +
+  geom_vline(aes(xintercept = 10, color = 'red'), size = 4, alpha = 0.5) +
+  theme(legend.position = 'none')
+
