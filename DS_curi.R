@@ -23,6 +23,8 @@
 # Feature Engineering and Selection - https://bookdown.org/max/FES/
 # Text Mining with R - https://www.tidytextmining.com/
 # TidyEval - https://tidyeval.tidyverse.org/
+# Rstudio AI Blog - https://blogs.rstudio.com/ai/
+
 
 -	Tidyverse 등 패키지 설명
   - Tidyr
