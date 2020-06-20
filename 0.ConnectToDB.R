@@ -43,6 +43,7 @@ tbl(con_mysql, 'iris') %>%
 tbl(con_mysql, 'mtcars')
 
 # Postgresql
+# sudo apt-get install unixodbc-dev
 # sudo apt-get install libpq-dev
 # install.packages('RPostgreSQL', dependencies=TRUE, repos='http://cran.rstudio.com/')
 
